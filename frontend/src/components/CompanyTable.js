@@ -1,8 +1,11 @@
 import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import Flag from "react-world-flags";
+import PriceChart from "./PriceChart";
 
+
+import Flag from "react-world-flags";
+// mock comapnies data
 const companies = [
     {
         rank: 1,
@@ -15,7 +18,6 @@ const companies = [
         country: "USA",
         countryCode: "US",
     },
-    // add more companies here
     {
         rank: 2,
         name: "Microsoft",
@@ -39,6 +41,9 @@ const companies = [
         countryCode: "US",
     },
 ];
+const prices = [1.5, 2, 3, 5, 1.5, 6, 7, 8, 7, 9, 10]; // mock prices, each company should have its own prices list
+                                                    // maybe should convert from string to double
+
 
 const CompanyTable = () => {
     return (
@@ -79,7 +84,7 @@ const CompanyTable = () => {
                                 {company.name}
                             </td>
                             <td>{company.marketCap}</td>
-                            <td>{company.price}</td>
+                            <td>{company.price}</td>                            
                             <td className={todayClass}>
                                 <FontAwesomeIcon
                                     icon={todayIcon}
@@ -87,7 +92,7 @@ const CompanyTable = () => {
                                 />
                                 {company.today}
                             </td>
-                            <td>{company.price30Days}</td>
+                            <td><PriceChart prices={prices} /></td>
                             <td>
                                 <Flag
                                     code={company.countryCode}
