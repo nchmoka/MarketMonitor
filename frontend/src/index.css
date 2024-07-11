@@ -24,12 +24,3 @@
 .button-custom:hover {
     color: lightgray;
 }
-
-table {
-    table-layout: fixed; /* This makes sure that the table columns don't resize */
-}
-
-th, td {
-    text-align: left; /* Aligns the text to the left */
-    padding: 5px; /* Adds some padding */
-}
