@@ -1,11 +1,10 @@
+import React, { useState } from "react";
 import { Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import PriceChart from "./PriceChart";
-
-
 import Flag from "react-world-flags";
-// mock comapnies data
+
 const companies = [
     {
         rank: 1,
@@ -41,31 +40,64 @@ const companies = [
         countryCode: "US",
     },
 ];
-const prices = [1.5, 2, 3, 5, 1.5, 6, 7, 8, 7, 9, 10]; // mock prices, each company should have its own prices list
-                                                    // maybe should convert from string to double
 
+const prices = [1.5, 2, 3, 5, 1.5, 6, 7, 8, 7, 9, 10];
 
 const CompanyTable = () => {
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+
+    const onSort = (key) => {
+        let direction = 'asc'; // ascending order
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const sortedCompanies = [...companies].sort((a, b) => {
+        if (sortConfig.key) {
+            const valueA = a[sortConfig.key];
+            const valueB = b[sortConfig.key];
+
+            if (sortConfig.key === 'marketCap' || sortConfig.key === 'price') {
+                // Remove non-numeric characters for marketCap and price
+                const numA = parseFloat(valueA.replace(/[^0-9.-]+/g,""));
+                const numB = parseFloat(valueB.replace(/[^0-9.-]+/g,""));
+                return (numA - numB) * (sortConfig.direction === 'asc' ? 1 : -1);
+            }
+
+            if (valueA < valueB) {
+                return sortConfig.direction === 'asc' ? -1 : 1;
+            }
+            if (valueA > valueB) {
+                return sortConfig.direction === 'asc' ? 1 : -1;
+            }
+            return 0;
+        }
+        return 0;
+    });
+
     return (
         <Table bordered={false} hover responsive className="table-sm">
             <thead>
                 <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Market Cap</th>
-                    <th>Price</th>
-                    <th>Today</th>
-                    <th>Price (30 Days)</th>
-                    <th>Country</th>
+                    {['rank', 'name', 'marketCap', 'price', 'today','Price (30 Days)', 'country'].map((key) => (
+                        <th key={key} onClick={() => onSort(key)}>
+                            {key.charAt(0).toUpperCase() + key.slice(1)}
+                            {sortConfig.key === key && (
+                                <FontAwesomeIcon
+                                    icon={sortConfig.direction === 'asc' ? faCaretUp : faCaretDown}
+                                    style={{ marginLeft: "5px" }}
+                                />
+                            )}
+                        </th>
+                    ))}
                 </tr>
             </thead>
             <tbody>
-                {companies.map((company, index) => {
-                    const todayValue = parseFloat(
-                        company.today.replace("%", "")
-                    );
-                    const todayClass =
-                        todayValue > 0 ? "text-success" : "text-danger";
+                {sortedCompanies.map((company, index) => {
+                    const todayValue = parseFloat(company.today.replace("%", ""));
+                    const todayClass = todayValue > 0 ? "text-success" : "text-danger";
                     const todayIcon = todayValue > 0 ? faCaretUp : faCaretDown;
 
                     return (
@@ -84,7 +116,7 @@ const CompanyTable = () => {
                                 {company.name}
                             </td>
                             <td>{company.marketCap}</td>
-                            <td>{company.price}</td>                            
+                            <td>{company.price}</td>
                             <td className={todayClass}>
                                 <FontAwesomeIcon
                                     icon={todayIcon}
