@@ -23,10 +23,10 @@ const ContactUs = () => {
         e.preventDefault();
         try {
             const result = await contactUs(formData.name, formData.email, formData.subject, formData.message);
-            console.log("Form data submitted:", formData);
-            setShowAlert(true);
-            setTimeout(() => setShowAlert(false), 3000); // Hide alert after 3 seconds
             if (result && result.success) {
+                console.log("Form data submitted:", formData);
+                setShowAlert(true);
+                setTimeout(() => setShowAlert(false), 3000); // Hide alert after 3 seconds
                 setFormData({ name: "", email: "", subject: "", message: "" }); // Clear form fields
             }
         } catch (error) {
@@ -196,6 +196,6 @@ const ContactUs = () => {
             </Row>
         </Container>
     );
-}
+};
 
 export default ContactUs;

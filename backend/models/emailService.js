@@ -12,10 +12,11 @@ const transporter = nodemailer.createTransport({
 
 const sendEmail = async (name, email, subject, message) => {
     const mailOptions = {
-        from: email,
+        from: email, // Your email address
         to: process.env.EMAIL, // Your email address
-        subject: subject,
-        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+        subject: 'Market Monitor - Contact Us - ' + subject,
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+        replyTo: email // Sets the reply-to address
     };
 
     try {

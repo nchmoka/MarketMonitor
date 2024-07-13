@@ -10,6 +10,12 @@ export const useLogin = () => {
         setIsLoading(true);
         setError(null);
 
+        if (!email || !password) {
+            setError("All fields must be filled");
+            setIsLoading(false);
+            return false;
+        }
+
         const response = await fetch("/api/user/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
