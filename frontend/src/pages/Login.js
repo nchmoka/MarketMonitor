@@ -9,23 +9,32 @@ import {
     Alert,
     Spinner,
     Image,
+    InputGroup,
+    Card,
+    CardBody
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const { login, isLoading, error } = useLogin();
     const handleSubmit = async (e) => {
         e.preventDefault();
         await login(email, password);
     };
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     return (
         <Container
-            className="d-flex justify-content-center align-items-center"
+            className="justify-content-center align-items-center"
             style={{ height: "100vh" }}
         >
+        <Card className="my-4">
+            <CardBody className="my-3">
             <Row className="w-100">
                 <Col md={{ span: 6, offset: 3 }}>
                     <Image
@@ -44,26 +53,39 @@ const Login = () => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="Enter email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
+                                <InputGroup>
+                                    <InputGroup.Text>
+                                        <i className="bi bi-person"></i>
+                                    </InputGroup.Text>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Enter email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </InputGroup>
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
+                                <InputGroup>
+                                    <InputGroup.Text>
+                                        <i className="bi bi-lock"></i>
+                                    </InputGroup.Text>
+                                    <Form.Control
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />   
+                                    <Button variant="btn btn-secondary" onClick={togglePasswordVisibility}>
+                                        <i className={`bi ${showPassword ? 'bi-eye' : 'bi-eye-slash'}`}></i>
+                                    </Button>                                 
+                                </InputGroup>
                         </Form.Group>
-
+                        <p className="text-right mt-3">
+                            <Link to="/forgotpassword" className="none-text-decoration">Forgot Password?</Link>
+                        </p>
                         <Button
                             variant="primary"
                             type="submit"
@@ -78,15 +100,17 @@ const Login = () => {
                         </Button>
                     </Form>
                     <p className="text-center mt-3">
-                        Don't have an account? <Link to="/signup">Sign Up</Link>
+                        Don't have an account? <Link to="/signup" className="none-text-decoration">Sign Up</Link>
                     </p>
                     {error && (
                         <div className="text-center mt-3">
-                            <Alert variant="danger">{error}</Alert>
+                            <Alert variant="danger" dismissible>{error}</Alert>
                         </div>
                     )}
                 </Col>
             </Row>
+            </CardBody>
+        </Card>
         </Container>
     );
 };

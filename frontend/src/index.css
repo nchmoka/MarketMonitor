@@ -24,3 +24,9 @@
 .button-custom:hover {
     color: lightgray;
 }
+.none-text-decoration {
+    text-decoration: none;
+}
+.text-right {
+    text-align: right !important;
+}

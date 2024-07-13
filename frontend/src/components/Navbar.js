@@ -35,6 +35,14 @@ const MyNavbar = () => {
                             <>
                                 <Nav.Item>
                                     <Link
+                                        to="/contactus"
+                                        className="nav-link nav-link-custom"
+                                    >
+                                        Contact Us
+                                    </Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Link
                                         to="/login"
                                         className="nav-link nav-link-custom"
                                     >
