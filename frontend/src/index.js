@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
+// bootstrap icons
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import App from "./App";
 import { CompaniesContextProvider } from "./context/CompaniesContext";
 import { AuthContextProvider } from "./context/AuthContext";
