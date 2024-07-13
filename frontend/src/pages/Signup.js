@@ -16,6 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import SuccessModal from "../components/SuccessModal";
 
+
 const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -92,7 +93,7 @@ const Signup = () => {
                                     </InputGroup>
                                 </Form.Group>
 
-                                <Form.Group controlId="formBasicPassword" className="my-3">
+                                <Form.Group controlId="formBasicConfirmPassword" className="my-3">
                                     <Form.Label>Confirm Password</Form.Label>
                                     <InputGroup>
                                         <InputGroup.Text>

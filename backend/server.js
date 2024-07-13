@@ -20,17 +20,19 @@ app.use((req, res, next) => {
 app.use("/api/user", userRoutes);
 
 
+
 app.post('/api/contactUs', async (req, res) => {
-    const { contactName, contactEmail, contactSubject, contactMessage } = req.body;
-
-    const emailResult = await sendEmail(contactName, contactEmail, contactSubject, contactMessage);
-
+    const { name, email, subject, message } = req.body;
+    const emailResult = await sendEmail(name, email, subject, message);
     if (emailResult.success) {
         res.status(200).json({ message: emailResult.message });
     } else {
         res.status(500).json({ message: emailResult.message });
     }
 });
+
+
+
 
 
 // TODO: add route for stocks api, it should return a list of stocks from outer api
