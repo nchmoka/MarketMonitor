@@ -19,7 +19,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const { login, isLoading, error } = useLogin();
+    const { login, isLoading, error, setError } = useLogin();
     const handleSubmit = async (e) => {
         e.preventDefault();
         await login(email, password);
@@ -104,7 +104,7 @@ const Login = () => {
                     </p>
                     {error && (
                         <div className="text-center mt-3">
-                            <Alert variant="danger" dismissible>{error}</Alert>
+                            <Alert variant="danger" dismissible onClose={() => setError(null)}>{error}</Alert>
                         </div>
                     )}
                 </Col>
