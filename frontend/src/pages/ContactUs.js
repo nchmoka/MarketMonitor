@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useContactUs } from "../hooks/useContactUs";
-import { Form, Button, Container, Row, Col, Alert, Card, InputGroup } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Alert, Card, InputGroup, Spinner, } from "react-bootstrap";
+import SuccessModal from "../components/SuccessModal";
 
 
 const ContactUs = () => {
@@ -11,6 +12,9 @@ const ContactUs = () => {
         message: ""
     });
     const [showAlert, setShowAlert] = useState(false);
+    const handleCloseSuccessModal = () => {
+        setShowAlert(false); // Close modal
+    };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -23,17 +27,20 @@ const ContactUs = () => {
         e.preventDefault();
         try {
             const result = await contactUs(formData.name, formData.email, formData.subject, formData.message);
-            if (result && result.success) {
+            console.log(result)
+            console.log(result.success)
+            if (result.success) {
+                setFormData({ name: "", email: "", subject: "", message: "" }); // Clear form fields
                 console.log("Form data submitted:", formData);
                 setShowAlert(true);
-                setTimeout(() => setShowAlert(false), 3000); // Hide alert after 3 seconds
-                setFormData({ name: "", email: "", subject: "", message: "" }); // Clear form fields
+                //setTimeout(() => setShowAlert(false), 3000); // Hide alert after 3 seconds
+                
             }
         } catch (error) {
             // Handle network or other errors
             console.error("Error submitting form:", error);
-            setShowAlert(true);
-            setTimeout(() => setShowAlert(false), 3000); // Hide alert after 3 seconds
+            setShowAlert(false);
+            //setTimeout(() => setShowAlert(false), 3000); // Hide alert after 3 seconds
         }
     };
 
@@ -118,7 +125,18 @@ const ContactUs = () => {
                                     </InputGroup>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Button type="submit" className="btn-block" variant="primary">Submit</Button>
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    className="w-100 mt-3"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? (
+                                        <Spinner animation="border" size="sm" />
+                                    ) : (
+                                        "Submit"
+                                    )}
+                                </Button>
                                 </Form.Group>
                             </Form>
                             {error && (
@@ -194,6 +212,14 @@ const ContactUs = () => {
                     </Card>
                 </Col>
             </Row>
+
+            {/* Success Modal */}
+            <SuccessModal
+                show={showAlert}
+                handleClose={handleCloseSuccessModal}
+                title="Message sent Successfully"
+                content="You have successfully send your message!"
+            />
         </Container>
     );
 };

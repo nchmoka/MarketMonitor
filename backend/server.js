@@ -25,9 +25,9 @@ app.post('/api/contactUs', async (req, res) => {
     const { name, email, subject, message } = req.body;
     const emailResult = await sendEmail(name, email, subject, message);
     if (emailResult.success) {
-        res.status(200).json({ message: emailResult.message });
+        res.status(200).json({ success: true });
     } else {
-        res.status(500).json({ message: emailResult.message });
+        res.status(500).json({ success: false, message:  emailResult.message});
     }
 });
 
