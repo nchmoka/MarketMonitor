@@ -22,14 +22,12 @@ const ContactUs = () => {
             [name]: value,
         });
     };
-    const { contactUs, isLoading, error } = useContactUs();
+    const { contactUs, isLoading, error, setError } = useContactUs();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const result = await contactUs(formData.name, formData.email, formData.subject, formData.message);
-            console.log(result)
-            console.log(result.success)
-            if (result.success) {
+            if (result) {
                 setFormData({ name: "", email: "", subject: "", message: "" }); // Clear form fields
                 console.log("Form data submitted:", formData);
                 setShowAlert(true);
@@ -77,7 +75,7 @@ const ContactUs = () => {
                                             <i className="bi bi-envelope-fill"></i>
                                         </InputGroup.Text>
                                         <Form.Control 
-                                            type="email" 
+                                            type="text" 
                                             id="email" 
                                             name="email" 
                                             placeholder="Enter your email"
@@ -141,7 +139,7 @@ const ContactUs = () => {
                             </Form>
                             {error && (
                                 <div className="text-center mt-3">
-                                    <Alert variant="danger" dismissible>{error}</Alert>
+                                    <Alert variant="danger" dismissible onClose={() => setError(null)}>{error}</Alert>
                                 </div>
                             )}
                         </Card.Body>

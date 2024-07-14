@@ -32,17 +32,20 @@ export const useContactUs = () => {
             })
             console.log(JSON.stringify({ name, email, subject, message }))
             console.log(response)
-            if (!response.success) {
+            if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.error || "Failed to contact us");
             }
-            setError(null);
-            setIsLoading(false); // Set loading state to false on successful response
+            else{
+                setError(null);
+                setIsLoading(false); // Set loading state to false on successful response
+                return true;
+            }
         } catch (error) {
             setError(error.message || "Failed to contact us");
             setIsLoading(false); // Set loading state to false on error
         }
     };
 
-    return { contactUs, isLoading, error };
+    return { contactUs, isLoading, error, setError };
 };

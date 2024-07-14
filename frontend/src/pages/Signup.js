@@ -21,7 +21,7 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const { signup, isLoading, error } = useSignup();
+    const { signup, isLoading, error, setError } = useSignup();
     const [showSuccessModal, setShowSuccessModal] = useState(false); // modal
     
     // modal
@@ -127,7 +127,7 @@ const Signup = () => {
                             </p>
                             {error && (
                                 <div className="text-center mt-3">
-                                    <Alert variant="danger" dismissible>{error}</Alert>
+                                    <Alert variant="danger" dismissible onClose={() => setError(null)}>{error}</Alert>
                                 </div>
                             )}
                         </Col>
