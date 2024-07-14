@@ -31,7 +31,8 @@ export const useContactUs = () => {
                 body: JSON.stringify({ name, email, subject, message }),
             })
             console.log(JSON.stringify({ name, email, subject, message }))
-            if (!response.ok) {
+            console.log(response)
+            if (!response.success) {
                 const errorData = await response.json();
                 throw new Error(errorData.error || "Failed to contact us");
             }
