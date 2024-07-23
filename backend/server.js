@@ -3,7 +3,7 @@ require("dotenv").config(); // load .env variables
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
-const { sendEmail } = require('./models/emailService');
+const contactUsRoutes = require("./routes/contactUs");
 
 // express app
 const app = express();
@@ -20,16 +20,8 @@ app.use((req, res, next) => {
 app.use("/api/user", userRoutes);
 
 
+app.use('/api/contactUs', contactUsRoutes);
 
-app.post('/api/contactUs', async (req, res) => {
-    const { name, email, subject, message } = req.body;
-    const emailResult = await sendEmail(name, email, subject, message);
-    if (emailResult.success) {
-        res.status(200).json({ success: true });
-    } else {
-        res.status(500).json({ success: false, message:  emailResult.message});
-    }
-});
 
 
 
