@@ -3,7 +3,6 @@ const { sendEmail } = require('../models/emailService');
 
 // 
 const contactUs = async (req, res) => {
-    console.log(req.body);
     const { name, email, subject, message } = req.body;
     try {
         const emailResult = await sendEmail(name, email, subject, message);
