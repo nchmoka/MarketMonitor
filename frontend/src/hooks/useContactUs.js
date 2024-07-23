@@ -4,10 +4,10 @@ const validator = require("validator");
 export const useContactUs = () => {
     const [error, setError] = useState(null);
     
-    const [isLoading, setIsLoading] = useState(false); // Initialize isLoading with false
+    const [isLoading, setIsLoading] = useState(null);
 
     const contactUs = async (name, email, subject, message) => {
-        setIsLoading(true); // Set loading state to true before fetch
+        setIsLoading(true); 
         setError(null);
 
         if(!name || !email || !subject || !message){
@@ -30,20 +30,19 @@ export const useContactUs = () => {
                 },
                 body: JSON.stringify({ name, email, subject, message }),
             })
-            console.log(JSON.stringify({ name, email, subject, message }))
-            console.log(response)
+            const json = await response.json();
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || "Failed to contact us");
+                setIsLoading(false);
+                setError(json.error);
             }
-            else{
+            if (response.ok){
                 setError(null);
                 setIsLoading(false); // Set loading state to false on successful response
                 return true;
             }
         } catch (error) {
-            setError(error.message || "Failed to contact us");
-            setIsLoading(false); // Set loading state to false on error
+            setIsLoading(false);
+            setError(error.message);
         }
     };
 
