@@ -43,7 +43,7 @@ const Signup = () => {
             className="justify-content-center align-items-center"
             style={{ height: "100vh" }}
         >
-            <Card className="my-4">
+            <Card className="my-2">
                 <CardBody className="my-3">
                     <Row className="w-100">
                         <Col md={{ span: 6, offset: 3 }}>
@@ -52,8 +52,8 @@ const Signup = () => {
                                 fluid
                                 roundedCircle
                                 style={{
-                                    width: "250px",
-                                    height: "250px",
+                                    width: "150px",
+                                    height: "150px",
                                     display: "block",
                                     margin: "0 auto",
                                 }}
@@ -135,13 +135,21 @@ const Signup = () => {
                 </CardBody>
             </Card>
 
-            {/* Success Modal */}
-            <SuccessModal
-                show={showSuccessModal}
-                handleClose={handleCloseSuccessModal}
-                title="Signup Successful"
-                content="You have successfully signed up!"
-            />
+        {/* Success Modal */}
+        <SuccessModal
+            show={showSuccessModal}
+            handleClose={handleCloseSuccessModal}
+            title="Signup Successful"
+            content={
+                <>
+                    You have successfully signed up!<br />
+                    Email to verify your account has been sent to you.<br />
+                    Please verify your email before signing in!
+                </>
+            }
+        />
+
+
 
         </Container>
     );

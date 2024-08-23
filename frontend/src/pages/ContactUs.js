@@ -154,7 +154,13 @@ const ContactUs = () => {
                                 </Col>
                                 <Col md={9}>
                                     <h5>24/7 Support</h5>
-                                    <Button id="contactSupport" className="btn-block mb-4" variant="secondary">Contact Support</Button>
+                                    <div style={{ fontSize: '2.5rem', color: 'gold' }}>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill"></i>
+                                    </div>
                                 </Col>
                             </Row>
                         </Card.Header>
@@ -174,7 +180,7 @@ const ContactUs = () => {
                                 </Col>
                                 <Col md={9} className="text-sm-center text-md-left">
                                     <h5 className="font-weight-bold">Email Address</h5>
-                                    <p>market@monitor.com</p>
+                                    <p>market.monitor.b@gmail.com</p>
                                 </Col>
                             </Row>
                             <Row>
@@ -183,7 +189,7 @@ const ContactUs = () => {
                                 </Col>
                                 <Col md={9} className="text-sm-center text-md-left">
                                     <h5 className="font-weight-bold">Contact Info</h5>
-                                    <p>Company Name<br />Karmiel<br />Magen 19865<br />Israel</p>
+                                    <p>Market Monitor<br />Karmiel<br />Magen 19865<br />Israel</p>
                                 </Col>
                             </Row>
                             <Row className="mb-4">
