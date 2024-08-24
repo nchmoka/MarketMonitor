@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const contactUsRoutes = require("./routes/contactUs");
+const stocksRoutes = require("./routes/stocks");
 
 // express app
 const app = express();
@@ -19,16 +20,10 @@ app.use((req, res, next) => {
 // routes
 app.use("/api/user", userRoutes);
 
-
 app.use('/api/contactUs', contactUsRoutes);
 
-
-
-
-
-
 // TODO: add route for stocks api, it should return a list of stocks from outer api
-// app.use("/api/stocks", stockRoutes);
+app.use("/api/stocks", stocksRoutes);
 
 // connect to mongodb & listen for requests
 mongoose
