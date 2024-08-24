@@ -98,10 +98,12 @@ const ContactUs = () => {
                                             onChange={handleChange}
                                         >
                                             <option value="">Select a subject</option>
-                                            <option value="Option 1">Option 1</option>
-                                            <option value="Option 2">Option 2</option>
-                                            <option value="Option 3">Option 3</option>
-                                            <option value="Option 4">Option 4</option>
+                                            <option value="Login / Registration Issues">Login / Registration Issues</option>
+                                            <option value="Software / App Issues">Software / App Issues</option>
+                                            <option value="Performance / Speed Problems">Performance / Speed Problems</option>
+                                            <option value="Password / Personal Information Recovery">Password / Personal Information Recovery</option>
+                                            <option value="Feature / Function Questions">Feature / Function Questions</option>
+                                            <option value="General Technical Support">General Technical Support</option>
                                         </Form.Control>
                                     </InputGroup>
                                 </Form.Group>
