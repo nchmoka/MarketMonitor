@@ -33,7 +33,7 @@ const Login = () => {
             className="justify-content-center align-items-center"
             style={{ height: "100vh" }}
         >
-        <Card className="my-4">
+        <Card className="my-2">
             <CardBody className="my-3">
             <Row className="w-100">
                 <Col md={{ span: 6, offset: 3 }}>
@@ -42,8 +42,8 @@ const Login = () => {
                         fluid
                         roundedCircle
                         style={{
-                            width: "250px",
-                            height: "250px",
+                            width: "150px",
+                            height: "150px",
                             display: "block",
                             margin: "0 auto",
                         }}
@@ -83,9 +83,6 @@ const Login = () => {
                                     </Button>                                 
                                 </InputGroup>
                         </Form.Group>
-                        <p className="text-right mt-3">
-                            <Link to="/forgotpassword" className="none-text-decoration">Forgot Password?</Link>
-                        </p>
                         <Button
                             variant="primary"
                             type="submit"

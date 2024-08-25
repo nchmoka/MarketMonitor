@@ -22,6 +22,15 @@ const MyNavbar = () => {
                         {user ? (
                             <>
                                 <Nav.Item>
+                                    <Link
+                                        to="/contactus"
+                                        className="nav-link nav-link-custom"
+                                    >
+                                        Contact Us
+                                    </Link>
+                                </Nav.Item>
+
+                                <Nav.Item>
                                     <Button
                                         variant="outline-danger"
                                         onClick={handleClick}

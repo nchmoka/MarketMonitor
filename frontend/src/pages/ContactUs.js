@@ -98,10 +98,12 @@ const ContactUs = () => {
                                             onChange={handleChange}
                                         >
                                             <option value="">Select a subject</option>
-                                            <option value="Option 1">Option 1</option>
-                                            <option value="Option 2">Option 2</option>
-                                            <option value="Option 3">Option 3</option>
-                                            <option value="Option 4">Option 4</option>
+                                            <option value="Login / Registration Issues">Login / Registration Issues</option>
+                                            <option value="Software / App Issues">Software / App Issues</option>
+                                            <option value="Performance / Speed Problems">Performance / Speed Problems</option>
+                                            <option value="Password / Personal Information Recovery">Password / Personal Information Recovery</option>
+                                            <option value="Feature / Function Questions">Feature / Function Questions</option>
+                                            <option value="General Technical Support">General Technical Support</option>
                                         </Form.Control>
                                     </InputGroup>
                                 </Form.Group>
@@ -154,7 +156,13 @@ const ContactUs = () => {
                                 </Col>
                                 <Col md={9}>
                                     <h5>24/7 Support</h5>
-                                    <Button id="contactSupport" className="btn-block mb-4" variant="secondary">Contact Support</Button>
+                                    <div style={{ fontSize: '2.5rem', color: 'gold' }}>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill" style={{ marginRight: '5px' }}></i>
+                                        <i className="bi bi-star-fill"></i>
+                                    </div>
                                 </Col>
                             </Row>
                         </Card.Header>
@@ -174,7 +182,7 @@ const ContactUs = () => {
                                 </Col>
                                 <Col md={9} className="text-sm-center text-md-left">
                                     <h5 className="font-weight-bold">Email Address</h5>
-                                    <p>market@monitor.com</p>
+                                    <p>market.monitor.b@gmail.com</p>
                                 </Col>
                             </Row>
                             <Row>
@@ -183,7 +191,7 @@ const ContactUs = () => {
                                 </Col>
                                 <Col md={9} className="text-sm-center text-md-left">
                                     <h5 className="font-weight-bold">Contact Info</h5>
-                                    <p>Company Name<br />Karmiel<br />Magen 19865<br />Israel</p>
+                                    <p>Market Monitor<br />Karmiel<br />Magen 19865<br />Israel</p>
                                 </Col>
                             </Row>
                             <Row className="mb-4">
