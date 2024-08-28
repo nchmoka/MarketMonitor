@@ -5,13 +5,12 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const contactUsRoutes = require("./routes/contactUs");
 const stocksRoutes = require("./routes/stocks");
-const cors = require("cors");
 
 // express app
 const app = express();
 
 // middleware
-app.use(cors());
+
 app.use(express.json());
 
 app.use((req, res, next) => {
