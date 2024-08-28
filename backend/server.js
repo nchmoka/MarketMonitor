@@ -19,6 +19,11 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get("/", (req, res) => {
+    res.send("Server is running");
+  });
+  
+
 // routes
 app.use("/api/user", userRoutes);
 
