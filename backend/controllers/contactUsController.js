@@ -11,7 +11,7 @@ const contactUs = async (req, res) => {
         if (emailResult.success) {
             res.status(200).json({ success: true });
         } else {
-            res.status(400).json({ success: false, message:  emailResult.message});
+            res.status(400).json({ success: false, message:  emailResult.message });
         }
     } catch (err) {
         res.status(400).json({ error: err.message });
