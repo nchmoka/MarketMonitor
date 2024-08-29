@@ -49,19 +49,19 @@ const CompanyTable = () => {
 
     // Sort companies
     const sortedCompanies = [...currentItems].sort((a, b) => {
-        const marketCapA = parseFloat(a.marketCap.replace(/[^0-9.-]+/g, ""));
-        const marketCapB = parseFloat(b.marketCap.replace(/[^0-9.-]+/g, ""));
-        return marketCapB - marketCapA;
-    });
-
-    if (sortConfig.key) {
-        sortedCompanies.sort((a, b) => {
+        if (sortConfig.key) {
             const valueA = a[sortConfig.key];
             const valueB = b[sortConfig.key];
 
             if (sortConfig.key === "marketCap" || sortConfig.key === "price") {
                 const numA = parseFloat(valueA.replace(/[^0-9.-]+/g, ""));
                 const numB = parseFloat(valueB.replace(/[^0-9.-]+/g, ""));
+                return (numA - numB) * (sortConfig.direction === "asc" ? 1 : -1);
+            }
+
+            if (sortConfig.key === "today") {
+                const numA = parseFloat(valueA.replace("%", ""));
+                const numB = parseFloat(valueB.replace("%", ""));
                 return (numA - numB) * (sortConfig.direction === "asc" ? 1 : -1);
             }
 
@@ -72,8 +72,10 @@ const CompanyTable = () => {
                 return sortConfig.direction === "asc" ? 1 : -1;
             }
             return 0;
-        });
-    }
+        }
+
+        return 0;
+    });
 
     const nextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1);
@@ -185,6 +187,4 @@ const CompanyTable = () => {
 };
 
 export default CompanyTable;
-
-
 

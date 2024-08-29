@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "https://market-monitor-deploy-server.vercel.app"
+      "source": "/api/(.*)",
+      "destination": "https://market-monitor-deploy-server.vercel.app/api/$1"
     }
   ]
 }
