@@ -82,7 +82,7 @@ const getData = async (req, res) => {
         res.json(combinedData);
     } catch (error) {
         console.error('Error fetching data from CoinGecko:', error);
-        res.status(500).json({ error: 'Failed to fetch data' });
+        //res.status(500).json({ error: 'Failed to fetch data' });
     }
 };
 

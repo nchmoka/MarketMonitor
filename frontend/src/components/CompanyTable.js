@@ -7,6 +7,7 @@ import Flag from "react-world-flags";
 
 const CompanyTable = () => {
     const [companies, setCompanies] = useState([]);
+    const [totalMarketCap, setTotalMarketCap] = useState(0);
     const [sortConfig, setSortConfig] = useState({
         key: null,
         direction: "asc",
@@ -15,18 +16,33 @@ const CompanyTable = () => {
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; // Define how many items per page
+    const itemsPerPage = 10;
 
     useEffect(() => {
         const fetchCoinsFromServer = async () => {
             try {
                 const response = await fetch('/api/stocks');
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('stocks didnt fetched because of free api limit, try again later');
                 }
                 const data = await response.json();
-                setCompanies(data);
-                setError(null);
+
+                // Check if data is valid and non-empty
+                if (Array.isArray(data) && data.length > 0) {
+                    setCompanies(data);
+                    setError(null);
+
+                    // Calculate total market cap with validation
+                    const totalCap = data.reduce((total, company) => {
+                        const marketCapValue = company.marketCap
+                            ? parseFloat(company.marketCap.replace(/[^0-9.-]+/g, ""))
+                            : 0;
+                        return total + (isNaN(marketCapValue) ? 0 : marketCapValue);
+                    }, 0);
+                    setTotalMarketCap(totalCap);
+                } else {
+                    throw new Error('No valid data received from server');
+                }
             } catch (error) {
                 setError('Error fetching data from server: ' + error.message);
             }
@@ -36,32 +52,30 @@ const CompanyTable = () => {
     }, []);
 
     const onSort = (key) => {
-        let direction = "asc"; // ascending order
+        let direction = "asc";
         if (sortConfig.key === key && sortConfig.direction === "asc") {
             direction = "desc";
         }
         setSortConfig({ key, direction });
     };
 
-    // Get the current page items
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentItems = companies.slice(startIndex, startIndex + itemsPerPage);
 
-    // Sort companies
     const sortedCompanies = [...currentItems].sort((a, b) => {
         if (sortConfig.key) {
-            const valueA = a[sortConfig.key];
-            const valueB = b[sortConfig.key];
+            const valueA = a[sortConfig.key] || ""; // Add default empty string if missing
+            const valueB = b[sortConfig.key] || ""; 
 
             if (sortConfig.key === "marketCap" || sortConfig.key === "price") {
-                const numA = parseFloat(valueA.replace(/[^0-9.-]+/g, ""));
-                const numB = parseFloat(valueB.replace(/[^0-9.-]+/g, ""));
+                const numA = parseFloat(valueA.replace(/[^0-9.-]+/g, "")) || 0;
+                const numB = parseFloat(valueB.replace(/[^0-9.-]+/g, "")) || 0;
                 return (numA - numB) * (sortConfig.direction === "asc" ? 1 : -1);
             }
 
             if (sortConfig.key === "today") {
-                const numA = parseFloat(valueA.replace("%", ""));
-                const numB = parseFloat(valueB.replace("%", ""));
+                const numA = parseFloat(valueA.replace("%", "")) || 0;
+                const numB = parseFloat(valueB.replace("%", "")) || 0;
                 return (numA - numB) * (sortConfig.direction === "asc" ? 1 : -1);
             }
 
@@ -88,6 +102,12 @@ const CompanyTable = () => {
     return (
         <>
             {error && <div className="alert alert-danger">{error}</div>}
+
+            {/* Display total market cap and number of companies */}
+            <div className="mb-3" style={{ textAlign: "center" }}>
+                <p>Number of Companies: {companies.length}, Total Market Cap: ${totalMarketCap.toLocaleString()}</p>
+            </div>
+
             <Table bordered={false} hover responsive className="table-sm">
                 <thead>
                     <tr>
@@ -129,36 +149,42 @@ const CompanyTable = () => {
                 </thead>
                 <tbody>
                     {sortedCompanies.map((company, index) => {
-                        const todayValue = parseFloat(company.today.replace("%", ""));
+                        const todayValue = company.today
+                            ? parseFloat(company.today.replace("%", "")) || 0
+                            : 0;
                         const todayClass = todayValue > 0 ? "text-success" : "text-danger";
                         const todayIcon = todayValue > 0 ? faCaretUp : faCaretDown;
 
                         return (
                             <tr key={index}>
-                                <td>{company.rank}</td>
+                                <td>{company.rank || 'N/A'}</td>
                                 <td>
                                     <img
-                                        src={company.logo}
-                                        alt={company.name}
+                                        src={company.logo || '/default-logo.png'}
+                                        alt={company.name || 'Unknown'}
                                         style={{ width: "20px", height: "20px", marginRight: "10px" }}
                                     />
-                                    {company.name}
+                                    {company.name || 'N/A'}
                                 </td>
-                                <td>{company.marketCap}</td>
-                                <td>{company.price}</td>
+                                <td>{company.marketCap || 'N/A'}</td>
+                                <td>{company.price || 'N/A'}</td>
                                 <td className={todayClass}>
                                     <FontAwesomeIcon icon={todayIcon} style={{ marginRight: "5px" }} />
-                                    {company.today}
+                                    {company.today || '0%'}
                                 </td>
                                 <td>
-                                    <PriceChart prices={company.price30Days} />
+                                    {company.price30Days ? (
+                                        <PriceChart prices={company.price30Days} />
+                                    ) : (
+                                        'No data'
+                                    )}
                                 </td>
                                 <td>
                                     <Flag
-                                        code={company.countryCode}
+                                        code={company.countryCode || 'US'}
                                         style={{ width: "20px", height: "15px", marginRight: "10px" }}
                                     />
-                                    {company.country}
+                                    {company.country || 'Unknown'}
                                 </td>
                             </tr>
                         );
@@ -187,4 +213,3 @@ const CompanyTable = () => {
 };
 
 export default CompanyTable;
-
